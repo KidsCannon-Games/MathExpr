@@ -7,4 +7,5 @@ obj/
 *.pidb
 *.resources
 
+packages
 test-results/

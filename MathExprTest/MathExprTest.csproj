@@ -41,4 +41,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MathExpr\MathExpr.csproj">
+      <Project>{6FD27C1E-4CB4-4EB1-878A-C42C8BD003B5}</Project>
+      <Name>MathExpr</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

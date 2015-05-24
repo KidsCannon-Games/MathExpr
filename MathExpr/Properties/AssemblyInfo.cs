@@ -25,3 +25,6 @@ using System.Runtime.CompilerServices;
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
 
+#if DEBUG
+[assembly: InternalsVisibleTo("MathExprTest")]
+#endif

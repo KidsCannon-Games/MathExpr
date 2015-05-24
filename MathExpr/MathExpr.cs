@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace MathExpr
 {
-    public class Parser
+    public class Evaler
     {
         public static float Eval(string exprString)
         {
-            return Eval(Parse(exprString));
+            return Eval(Parser.Parse(exprString));
         }
 
         public static float Eval(string[] postfixNotationTokens)
@@ -18,7 +18,7 @@ namespace MathExpr
             for (var i = 0; i < postfixNotationTokens.Length; i++)
             {
                 var tok = postfixNotationTokens[i];
-                if (!isOp(tok))
+                if (!Utils.isOp(tok))
                 {
                     stack.Push(float.Parse(tok));
                 }
@@ -49,7 +49,10 @@ namespace MathExpr
             }
             return stack.Pop();
         }
+    }
 
+    public class Parser
+    {
         public static string[] Parse(string exprString)
         {
             return ToPostfixNotation(Tokenize(exprString));
@@ -71,7 +74,7 @@ namespace MathExpr
                 {
                     case "-":
                     case "+":
-                        bool isUnary = lastIndex < 0 || !isNum(tokens[lastIndex]);
+                        bool isUnary = lastIndex < 0 || !Utils.isNum(tokens[lastIndex]);
 
                         if (isUnary)
                         {
@@ -86,7 +89,7 @@ namespace MathExpr
                     case "*":
                     case "/":
                     case "%":
-                        if (lastIndex >= 0 && !isNum(tokens[lastIndex]))
+                        if (lastIndex >= 0 && !Utils.isNum(tokens[lastIndex]))
                         {
                             // raise error
                         }
@@ -96,7 +99,7 @@ namespace MathExpr
                         tokens.Add(tok);
                         break;
                     case ")":
-                        if (lastIndex < 0 || !isNum(tokens[lastIndex]))
+                        if (lastIndex < 0 || !Utils.isNum(tokens[lastIndex]))
                         {
                             // raise error
                         }
@@ -106,7 +109,7 @@ namespace MathExpr
                     case " ":
                         break;
                     default:
-                        if (lastIndex >= 0 && isNum(tokens[lastIndex]))
+                        if (lastIndex >= 0 && Utils.isNum(tokens[lastIndex]))
                         {
                             tokens[lastIndex] += tok;
                             break;
@@ -190,18 +193,21 @@ namespace MathExpr
 
             return postfix.ToArray();
         }
+    }
 
-        private static bool isOp(string tok)
+    internal class Utils
+    {
+        public static bool isOp(string tok)
         {
             return tok == "-" || tok == "+" || tok == "*" || tok == "/" && tok == "%";
         }
 
-        private static bool maybeUnaryOp(string tok)
+        public static bool maybeUnaryOp(string tok)
         {
             return tok == "-" || tok == "+";
         }
 
-        private static bool isNum(string str)
+        public static bool isNum(string str)
         {
             return Regex.IsMatch(str, @"[-+]?[0-9]+\.?[0-9]*");
         }

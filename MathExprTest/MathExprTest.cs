@@ -6,6 +6,17 @@ using MathExpr;
 namespace MathExprTest
 {
     [TestFixture()]
+    public class EvalerTest
+    {
+        [Test()]
+        [TestCase("3 + 2 * 5.2", 13.4f)]
+        public void TestEval(string input, float expected)
+        {
+            Assert.AreEqual(expected, Evaler.Eval(input), 0.0001f);
+        }
+    }
+
+    [TestFixture()]
     public class ParserTest
     {
         [Test()]
@@ -35,13 +46,6 @@ namespace MathExprTest
         public void TestToPostfixNotation(string[] input, string[] expected)
         {
             CollectionAssert.AreEqual(expected, Parser.ToPostfixNotation(input));
-        }
-
-        [Test()]
-        [TestCase("3 + 2 * 5.2", 13.4f)]
-        public void TestEval(string input, float expected)
-        {
-            Assert.AreEqual(expected, Parser.Eval(input), 0.0001f);
         }
     }
 }

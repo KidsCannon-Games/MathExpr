@@ -1,6 +1,7 @@
 language: csharp
 solution: MathExpr.sln
 
+sudo: false
 install:
   - (cd MathExprTest && nuget install -OutputDirectory ../packages)
 script:

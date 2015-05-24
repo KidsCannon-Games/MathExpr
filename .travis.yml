@@ -1,0 +1,11 @@
+language: csharp
+solution: MathExpr.sln
+
+install:
+  - (cd MathExprTest && nuget install -OutputDirectory ../packages)
+script:
+  - make test
+mono:
+  - latest
+  - 3.10.0
+  - 3.2.8
